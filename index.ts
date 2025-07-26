@@ -1,8 +1,9 @@
 import express from "express";
 const app = express();
-const port = 3000;
+const port = 5000;
 
 // Serve static files from 'public'
+
 app.use(express.static("public"));
 
 app.get("/submit", (req, res) => {
