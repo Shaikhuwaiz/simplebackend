@@ -1,17 +1,18 @@
 import express from "express";
 import mongoose from "mongoose";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
-const port = 7000;
+const port = process.env.PORT || 8000;
 
 // Middleware
 app.use(express.json());
 
 // MongoDB Atlas connection
 mongoose
-  .connect(
-    "mongodb+srv://sheikhuwaiz:owaiz123@cluster0.yodj03o.mongodb.net/mydb?retryWrites=true&w=majority&appName=Cluster0"
-  )
+  .connect(process.env.MONGODB_URI || "")
   .then(() => console.log("✅ Connected to MongoDB Atlas"))
   .catch((err) => console.error("❌ MongoDB connection error:", err));
 
@@ -22,7 +23,12 @@ const userSchema = new mongoose.Schema({
 });
 const User = mongoose.model("User", userSchema);
 
-// POST route
+// ✅ GET route (for browser check)
+app.get("/", (req, res) => {
+  res.send("✅ Server is up and running!");
+});
+
+// ✅ POST route (for Postman or frontend)
 app.post("/submit", async (req, res) => {
   const { name, age } = req.body;
 
