@@ -29,7 +29,7 @@ app.get("/", (req, res) => {
 });
 
 // ✅ POST route (for Postman or frontend)
-app.post("/submit", async (req, res) => {
+app.post("/users", async (req, res) => {
   const { name, age } = req.body;
 
   try {
