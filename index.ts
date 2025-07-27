@@ -9,8 +9,7 @@ const app = express();
 const port = process.env.PORT || 8000;
 
 // Middleware
-app.use(express.json());
-app.use(cors()); // ✅ Allow all domains
+app.use(cors()); // Allow cross-origin requests
 app.use(express.json());
 
 // MongoDB Atlas connection
@@ -26,12 +25,12 @@ const userSchema = new mongoose.Schema({
 });
 const User = mongoose.model("User", userSchema);
 
-// ✅ GET route (for browser check)
+// GET route - just a health check
 app.get("/", (req, res) => {
   res.send("✅ Server is up and running!");
 });
 
-// ✅ POST route (for Postman or frontend)
+// POST route - create new user
 app.post("/users", async (req, res) => {
   const { name, age } = req.body;
 
@@ -39,12 +38,13 @@ app.post("/users", async (req, res) => {
     const newUser = new User({ name, age });
     await newUser.save();
     console.log("✅ Saved to DB:", newUser);
-    res.send(
-      `Received, ${name}! and you are ${age} years old. Saved to database.`
-    );
+    res.json({
+      message: `Received, ${name}! and you are ${age} years old.`,
+      user: newUser,
+    });
   } catch (err) {
     console.error("❌ Error saving to DB:", err);
-    res.status(500).send("Something went wrong!");
+    res.status(500).json({ message: "Something went wrong!" });
   }
 });
 
