@@ -7,11 +7,25 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 8000;
-
+const allowedOrigins = ["https://nameage-shaikhuwaizs-projects.vercel.app"];
 // Middleware
-app.use(cors()); // Allow cross-origin requests
-app.use(express.json());
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST", "OPTIONS"],
+    credentials: true,
+  })
+);
 
+app.use(express.json()); // ✅ Add this line here
+
+app.options("*", cors()); // Allow preflight requests
 // MongoDB Atlas connection
 mongoose
   .connect(process.env.MONGODB_URI || "")
@@ -43,8 +57,8 @@ app.post("/users", async (req, res) => {
       user: newUser,
     });
   } catch (err) {
-    console.error("❌ Error saving to DB:", err);
-    res.status(500).json({ message: "Something went wrong!" });
+    console.error("🔥 Express error:", err);
+    res.status(500).json({ message: "Server internal error" });
   }
 });
 
