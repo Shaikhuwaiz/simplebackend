@@ -2,9 +2,9 @@ services:
   - type: web
     name: simplebackend
     env: node
-    buildCommand: "npm install"
-    startCommand: "node index.js"
     plan: free
+    buildCommand: "npm install && npm run build"
+    startCommand: "npm start"
     autoDeploy: true
     envVars:
       - key: MONGODB_URI
