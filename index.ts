@@ -6,7 +6,7 @@ import cors from "cors";
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 7001;
 const allowedOrigins = ["https://nameage-shaikhuwaizs-projects.vercel.app"];
 // Middleware
 app.use(
