@@ -7,8 +7,11 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 7002;
-const allowedOrigins = ["https://nameage-shaikhuwaizs-projects.vercel.app"];
-// Middleware
+const allowedOrigins = [
+  "http://localhost:5174",          // ✅ no trailing slash
+  "https://login0-chi.vercel.app"  // ✅ your Vercel frontend
+];
+
 app.use(
   cors({
     origin: function (origin, callback) {
