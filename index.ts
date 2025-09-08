@@ -7,28 +7,11 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 7003;
 
-// Allow localhost + your deployed frontend URL
-const allowedOrigins = [
-  "http://localhost:5174",
-  "https://simplefrontend-1.vercel.app", // <- Replace with your actual deployed frontend URL
-];
-
-// CORS middleware
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      // allow requests with no origin (like Postman or curl)
-      if (!origin) return callback(null, true);
-
-      if (allowedOrigins.indexOf(origin) === -1) {
-        const msg = `CORS error: Origin ${origin} not allowed!`;
-        return callback(new Error(msg), false);
-      }
-      return callback(null, true);
-    },
-    methods: ["GET", "POST", "OPTIONS"],
-  })
-);
+// Allow all origins
+app.use(cors({
+  origin: "*", // <-- this allows requests from anywhere
+  methods: ["GET", "POST", "OPTIONS"],
+}));
 
 app.use(express.json());
 
