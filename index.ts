@@ -38,7 +38,7 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.model("User", userSchema);
 
 // GET route - just a health check
-app.get("/", (req, res) => {
+app.get("/users", (req, res) => {
   res.send("✅ Server is up and running!");
 });
 
