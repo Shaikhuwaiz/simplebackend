@@ -8,8 +8,9 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 7002;
 const allowedOrigins = [
-  "http://localhost:5174",          // ✅ no trailing slash
-  "https://login0-chi.vercel.app"  // ✅ your Vercel frontend
+  "http://localhost:5174",
+  "http://localhost:5173",  // sometimes Vite runs on 5173
+  "https://login0-chi.vercel.app"
 ];
 
 app.use(
