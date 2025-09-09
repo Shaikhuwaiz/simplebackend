@@ -34,7 +34,7 @@ app.get("/", (req, res) => {
 });
 
 // GET all users route
-app.get("/users", async (req, res) => {
+app.get("/", async (req, res) => {
   try {
     const users = await User.find();
     res.json(users);
