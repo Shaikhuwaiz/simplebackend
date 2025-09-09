@@ -5,7 +5,7 @@ import cors from "cors";
 
 dotenv.config();
 const app = express();
-const port = process.env.PORT || 7005;
+const port = process.env.PORT || 8001;
 
 // Allow all origins (no credentials)
 app.use(cors({
