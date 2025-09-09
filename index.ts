@@ -5,11 +5,11 @@ import cors from "cors";
 
 dotenv.config();
 const app = express();
-const port = process.env.PORT || 7003;
+const port = process.env.PORT || 7005;
 
-// Allow all origins
+// Allow all origins (no credentials)
 app.use(cors({
-  origin: "*", // <-- this allows requests from anywhere
+  origin: "*",
   methods: ["GET", "POST", "OPTIONS"],
 }));
 
@@ -23,8 +23,20 @@ mongoose.connect(process.env.MONGODB_URI || "")
 const userSchema = new mongoose.Schema({ name: String, age: Number });
 const User = mongoose.model("User", userSchema);
 
-app.get("/users", (req, res) => res.send("✅ Server is up and running!"));
+// Root route
+app.get("/", (req, res) => res.send("✅ Server is up and running!"));
 
+// Get all users
+app.get("/users", async (req, res) => {
+  try {
+    const users = await User.find();
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ message: "Server internal error" });
+  }
+});
+
+// Create user
 app.post("/users", async (req, res) => {
   const { name, age } = req.body;
   try {
