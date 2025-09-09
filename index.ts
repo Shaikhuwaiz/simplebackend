@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({ name: String, age: Number });
 const User = mongoose.model("User", userSchema);
 
 // Root route
-app.get("/", (req, res) => res.send("✅ Server is up and running!"));
+app.get("/users", (req, res) => res.send("✅ Server is up and running!"));
 
 // Get all users
 app.get("/users", async (req, res) => {
